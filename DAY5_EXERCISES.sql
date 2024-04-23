@@ -42,3 +42,16 @@ select * from Cinema
 where id%2=1 and description <> 'boring'
 order by rating DESC
 --Day5_Exercise10
+select teacher_id,
+count(distinct subject_id) as cnt
+from Teacher
+group by teacher_id
+--Day5_Exercise11
+select user_id,
+count(follower_id) as followers_count
+from Followers
+group by user_id
+order by user_id 
+--Day5_Exercise12
+select class from Courses
+having count(student)>=5
