@@ -36,3 +36,19 @@ select tweet_id
 from Tweets
 where length(content )>15
 --Day7_exercise7
+select 
+activity_date as day,
+count(distinct user_id) as active_users
+from Activity 
+where activity_date between '2019-06-28' and '2019-07-27'
+group by activity_date
+--Day7_exercise8
+select count(id) as number_employee
+from employees
+where extract (month from joining_date) between 1 and 7
+and abd extract (year from joining_date)=2022
+--Day7_exercise9
+select position('a' in first_name) as position
+from worker
+where first_name='Amitah'
+--Day7_exercise10
