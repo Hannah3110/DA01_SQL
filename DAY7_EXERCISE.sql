@@ -32,3 +32,7 @@ group by sender_id
 order by count(message_id) DESC
 limit 2
 --Day7_exercise6
+select tweet_id
+from Tweets
+where length(content )>15
+--Day7_exercise7
