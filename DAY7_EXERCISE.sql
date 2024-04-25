@@ -15,3 +15,20 @@ from pharmacy_sales
 group by manufacturer
 order by sum(total_sales) DESC,manufacturer
 --Day7_exercise4
+SELECT extract (month from submit_date) as mth,
+product_id as product,
+round(avg(stars),2) as avg_stars
+FROM reviews
+group by product_id, extract (month from submit_date)
+order by extract (month from submit_date), product_id
+--Day7_exercise5
+SELECT
+sender_id,
+count(message_id) as message_count
+from messages
+where extract(month from sent_date)=8
+and extract(year from sent_date)=2022
+group by sender_id
+order by count(message_id) DESC
+limit 2
+--Day7_exercise6
