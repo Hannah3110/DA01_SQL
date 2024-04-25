@@ -52,3 +52,7 @@ select position('a' in first_name) as position
 from worker
 where first_name='Amitah'
 --Day7_exercise10
+select winery,
+substring (title, length(winery)+2,4) as vintage_years
+from winemag_p2
+where country='Macedonia'
