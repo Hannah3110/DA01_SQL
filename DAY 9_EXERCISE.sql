@@ -25,3 +25,15 @@ CASE
 end)/count(case_id),1) as uncategorised_call_pct
 FROM callers
 --Day9_exercise4
+select name from Customer
+where referee_id is null or referee_id<>2
+--Day9_exercise5
+select survived,
+sum(case 
+    when pclass=1 then 1 else 0 end) as first_class,
+sum(case 
+    when pclass=2 then 1 else 0 end) as second_class,
+sum(case
+    when pclass=3 then 1 else 0 end) as third_class
+from titanic
+group by survived
