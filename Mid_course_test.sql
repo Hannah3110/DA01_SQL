@@ -44,4 +44,26 @@ left join customer as b
 on a.address_id=b.address_id
 where b.customer_id is null
 --Q7
-
+select a.city, sum(d.amount)
+from city as a
+inner join address as b
+on a.city_id=b.city_id
+inner join customer as c
+on b.address_id=c.address_id
+inner join payment as d
+on c.customer_id=d.customer_id
+group by a.city
+order by sum(d.amount) DESC
+--Q8
+select concat(a.city,',',b.country), sum(e.amount)
+from city as a
+inner join country as b
+on a.country_id=b.country_id
+inner join address as c
+on a.city_id=c.city_id
+inner join customer as d
+on c.address_id=d.address_id
+inner join payment as e
+on d.customer_id=e.customer_id
+group by concat(a.city,',',b.country)
+order by sum(e.amount) DESC
