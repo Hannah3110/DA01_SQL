@@ -31,3 +31,17 @@ on b.category_id=c.category_id
 group by c.name
 order by count(a.title) DESC
 --Q5
+select a.first_name, a.last_name, count(b.film_id)
+from actor as a 
+inner join film_actor as b
+on a.actor_id=b.actor_id
+group by a.first_name, a.last_name
+order by count(b.film_id) DESC
+--Q6
+select a.address_id, a.address, b.customer_id 
+from address as a
+left join customer as b
+on a.address_id=b.address_id
+where b.customer_id is null
+--Q7
+
