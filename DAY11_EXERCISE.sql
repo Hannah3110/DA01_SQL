@@ -51,4 +51,10 @@ on a.product_id=b.product_id
 where extract(month from b.order_date)=02 and extract(year from b.order_date)=2020
 group by a.product_name
 having sum(b.unit)>=100
---Day11_Exercise6
+--Day11_Exercise7
+SELECT a.page_id
+FROM pages as a  
+left join page_likes as b  
+on a.page_id=b.page_id
+where liked_date is NULL
+order by a.page_id
