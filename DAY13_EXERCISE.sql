@@ -25,9 +25,19 @@ and category='electronics'
 group by category, product
 order by sum(spend) DESC
 limit 2)
-
+--Day13_Exercise3
 select category, product, total_spend
 from cte_cat1
 UNION ALL 
 select category, product, total_spend
 from cte_cat2
+
+with cte_count as
+(SELECT policy_holder_id, 
+COUNT(case_id) AS count_case
+FROM callers
+group by policy_holder_id)
+
+select count(policy_holder_id) as policy_holder_count
+from cte_count
+where count_case>=3
