@@ -41,3 +41,10 @@ group by policy_holder_id)
 select count(policy_holder_id) as policy_holder_count
 from cte_count
 where count_case>=3
+--Day13_Exercise4
+select page_id from pages
+where page_id not in
+(select page_id from page_likes
+where pages.page_id=page_likes.page_id)
+order by page_id
+--Day13_Exercise5
