@@ -48,3 +48,44 @@ where page_id not in
 where pages.page_id=page_likes.page_id)
 order by page_id
 --Day13_Exercise5
+SELECT extract(month from July.event_date) as month,
+count(distinct July.user_id) as monthly_active_users
+FROM user_actions as July
+where July.user_id in (
+select June.user_id from user_actions as June
+where June.user_id=July.user_id
+and extract(month from June.event_date)=6 and extract(year from June.event_date)=2022
+and June.event_id is not null)
+and extract(month from July.event_date)=7 and extract(year from July.event_date)=2022
+and July.event_id is not null
+group by month
+--Day13_Exercise6
+  select left(trans_date,7) as month,
+country,
+count(id) as trans_count,
+sum(
+    case
+    when state = 'approved' then 1 else 0
+    end) as approved_count,
+sum(amount) as trans_total_amount,
+sum(
+    case 
+    when state = 'approved' then amount else 0 end) as approved_total_amount
+from Transactions
+group by month, country
+--Day13_Exercise7
+with cte_minyear as
+(select product_id,
+min(year) as first_year
+from Sales 
+group by product_id)
+select final.product_id, final.year as first_year, final.quantity, final.price
+from sales as final
+inner join cte_minyear on final.product_id=cte_minyear.product_id
+and final.year=cte_minyear.first_year
+--Day13_Exercise8
+select customer_id
+from Customer
+group by customer_id
+having count(product_key)=(
+select count(product_key) from Product)
