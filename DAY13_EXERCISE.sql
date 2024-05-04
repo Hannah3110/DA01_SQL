@@ -89,3 +89,40 @@ from Customer
 group by customer_id
 having count(product_key)=(
 select count(product_key) from Product)
+--Day13_Exercise9
+select emp.employee_id
+from Employees as emp
+where emp.salary<30000
+and emp.manager_id not in (
+    select mng.employee_id from Employees as mng
+    where mng.employee_id=emp.manager_id)
+and emp.manager_id is not null
+order by emp.employee_id
+--Day13_Exercise11
+(select name as results from Users
+where user_id in
+(select user_id from MovieRating
+group by user_id
+order by count(rating) DESC) order by name limit 1)
+union all
+(select title as results from Movies
+where movie_id in
+(select movie_id from MovieRating
+where extract(year from created_at)=2020 and extract(month from created_at)=2
+group by movie_id
+order by avg(rating) DESC)
+order by title limit 1)
+--Day13_Exercise12
+with cte as
+(select requester_id as id,
+count(accepter_id) as num
+from RequestAccepted
+group by id union all
+select accepter_id as id,
+count(requester_id) as num
+from RequestAccepted
+group by id)
+select id, sum(num) as num
+from cte
+group by id
+order by num DESC limit 1
