@@ -23,3 +23,32 @@ row_number() over(PARTITION BY user_id order by transaction_date) as trans_date
 FROM transactions) as a
 where trans_date=3
 --Day15_EX4
+select transaction_date,user_id,
+count (product_id) as purchase_count from
+(SELECT transaction_date,rank() over(partition by user_id order by transaction_date DESC) as latest_trans, 
+user_id, product_id
+FROM user_transactions) as a  
+where latest_trans = 1
+group by transaction_date,user_id
+--Day15_EX5
+
+--Day15_EX7
+select category,product,total_spend from
+(select category,product,
+sum(spend) as total_spend,
+rank() over (PARTITION BY category order by sum(spend) DESC) as top
+from product_spend
+where extract(year from transaction_date)=2022
+group by category,product) as a  
+where top <=2
+order by category
+--Day15_EX8
+select *
+from(SELECT a.artist_name,
+dense_rank() over (order by count(b.song_id) DESC) as artist_rank 
+FROM artists as a
+inner join songs as b on a.artist_id=b.artist_id
+inner join global_song_rank as c on b.song_id=c.song_id
+where c.rank<=10
+group by a.artist_name) as a  
+where artist_rank<=5
