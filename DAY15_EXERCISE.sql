@@ -31,7 +31,22 @@ FROM user_transactions) as a
 where latest_trans = 1
 group by transaction_date,user_id
 --Day15_EX5
+with cte as
+(SELECT *,
+COALESCE(lag(tweet_count) over (partition by user_id order by tweet_date),0) as day_1,
+COALESCE(lag(tweet_count,2) over (partition by user_id order by tweet_date),0) as day_2
+FROM tweets)
 
+select user_id,tweet_date,
+case
+  when day_1=0 and day_2=0 then round(tweet_count,2)
+  when day_1=0 then round((tweet_count+day_2)/2.0,2)
+  when day_2=0 then round((tweet_count+day_1)/2.0,2)
+  else round((tweet_count+day_1+day_2)/3.0,2)
+end as rolling_avg_3d
+from cte
+--Day15_EX6
+  
 --Day15_EX7
 select category,product,total_spend from
 (select category,product,
