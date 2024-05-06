@@ -46,7 +46,14 @@ case
 end as rolling_avg_3d
 from cte
 --Day15_EX6
-  
+with cte AS
+(SELECT merchant_id,credit_card_id,amount,
+transaction_timestamp-
+lag(transaction_timestamp) over(PARTITION BY merchant_id,credit_card_id,amount) as time_within
+FROM transactions)
+select count(time_within)
+from cte 
+where time_within<='00:10:00' 
 --Day15_EX7
 select category,product,total_spend from
 (select category,product,
