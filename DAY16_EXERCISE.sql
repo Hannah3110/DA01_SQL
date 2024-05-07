@@ -12,7 +12,14 @@ round(100.0*sum(case
     else 0
     end)/count(immediate),2) as immediate_percentage
 from cte
---Day16_Ex7
+--Day16_Ex3
+select id,
+case
+    when mod(id,2)=1 then coalesce(lead(student) over(order by id),student)
+    else lag(student) over(order by id)
+end as student
+from Seat
+--Day16_Ex6
 with cte as
 (select b.name as Department,a.name as Employee,a.salary as Salary,
 dense_rank() over(partition by b.name order by a.salary desc) as rank_order
