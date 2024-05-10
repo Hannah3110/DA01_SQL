@@ -1,3 +1,4 @@
+--- Ex1
 alter table sales_dataset_rfm_prj
 alter column ordernumber type integer using (trim(ordernumber)::integer),
 alter column quantityordered type int using (trim(quantityordered)::int),
@@ -21,3 +22,23 @@ alter column territory type text USING (trim(territory)::text),
 alter column contactfullname type text USING (trim(contactfullname)::text),
 alter column productcode type varchar USING (trim(productcode)::varchar),
 alter column dealsize type text USING (trim(dealsize)::text)
+
+--- Ex2
+select * from sales_dataset_rfm_prj
+where ORDERNUMBER is null 
+or ORDERNUMBER='';
+select * from sales_dataset_rfm_prj
+where QUANTITYORDERED is null 
+or QUANTITYORDERED='';
+select * from sales_dataset_rfm_prj
+where PRICEEACH is null 
+or PRICEEACH='';
+select * from sales_dataset_rfm_prj
+where ORDERLINENUMBER is null 
+or ORDERLINENUMBER='';
+select * from sales_dataset_rfm_prj
+where SALES is null 
+or SALES='';
+select * from sales_dataset_rfm_prj
+where ORDERDATE is null 
+or ORDERDATE='';
