@@ -42,3 +42,9 @@ or SALES='';
 select * from sales_dataset_rfm_prj
 where ORDERDATE is null 
 or ORDERDATE='';
+
+--- Ex3
+alter table sales_dataset_rfm_prj
+add column CONTACTLASTNAME text,
+add column CONTACTFIRSTNAME text
+
