@@ -82,4 +82,27 @@ select * from sales_dataset_rfm_prj
 where QUANTITYORDERED < (select min_value from twt_min_max)
 or QUANTITYORDERED > (select max_value from twt_min_max)
 --- using z-score
+with cte as
+(select *
+(select avg(QUANTITYORDERED) from sales_dataset_rfm_prj) as avg,
+(select stddev(QUANTITYORDERED) from sales_dataset_rfm_prj) as std
+from sales_dataset_rfm_prj),
+twt_oulier as
+(select *, (QUANTITYORDERED-avg)/std as z_score
+from cte
+where abs((QUANTITYORDERED-avg)/std)>3)
+
+update sales_dataset_rfm_prj
+set QUANTITYORDERED=(set avg(QUANTITYORDERED)
+from sales_dataset_rfm_prj)
+where QUANTITYORDERED in (select QUANTITYORDERED from twt_oulier);
+---- delete outlier
+delete from sales_dataset_rfm_prj
+where QUANTITYORDERED in (select QUANTITYORDERED from twt_oulier)
+---Ex6
+create or replace view SALES_DATASET_RFM_PRJ_CLEAN as
+(update sales_dataset_rfm_prj
+set QUANTITYORDERED=(set avg(QUANTITYORDERED)
+from sales_dataset_rfm_prj)
+where QUANTITYORDERED in (select QUANTITYORDERED from twt_oulier))
 
