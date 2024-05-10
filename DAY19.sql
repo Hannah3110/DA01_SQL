@@ -25,23 +25,17 @@ alter column dealsize type text USING (trim(dealsize)::text)
 
 --- Ex2
 select * from sales_dataset_rfm_prj
-where ORDERNUMBER is null 
-or ORDERNUMBER='';
+where ORDERNUMBER is null;
 select * from sales_dataset_rfm_prj
-where QUANTITYORDERED is null 
-or QUANTITYORDERED='';
+where QUANTITYORDERED is null;
 select * from sales_dataset_rfm_prj
-where PRICEEACH is null 
-or PRICEEACH='';
+where PRICEEACH is null;
 select * from sales_dataset_rfm_prj
-where ORDERLINENUMBER is null 
-or ORDERLINENUMBER='';
+where ORDERLINENUMBER is null;
 select * from sales_dataset_rfm_prj
-where SALES is null 
-or SALES='';
+where SALES is null;
 select * from sales_dataset_rfm_prj
-where ORDERDATE is null 
-or ORDERDATE='';
+where ORDERDATE is null;
 
 --- Ex3
 alter table sales_dataset_rfm_prj
