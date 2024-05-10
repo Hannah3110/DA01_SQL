@@ -1,9 +1,23 @@
-select * from sales_dataset_rfm_prj;
 alter table sales_dataset_rfm_prj
-alter column priceeach type numeric using (trim(priceeach)::numeric);
-alter table sales_dataset_rfm_prj
-alter column ordernumber type int using (trim(ordernumber)::int);
-alter table sales_dataset_rfm_prj
-alter column quantityordered type int using (trim(quantityordered)::int);
-alter table sales_dataset_rfm_prj
-alter column orderdate type timestamp using (trim(orderdate)::timestamp)
+alter column ordernumber type integer using (trim(ordernumber)::integer),
+alter column quantityordered type int using (trim(quantityordered)::int),
+alter column priceeach type numeric using (trim(priceeach)::numeric),
+alter column orderlinenumber type int USING (trim(orderlinenumber)::integer),
+alter column sales type numeric USING (trim(sales)::numeric),
+alter column orderdate type timestamp using (trim(orderdate)::timestamp),
+alter column status type text USING (trim(status)::text),
+alter column productline type text USING (trim(productline)::text),
+alter column msrp type int USING (trim(msrp)::int),
+alter column productcode type varchar USING (trim(productcode)::varchar),
+alter column customername type text USING (trim(customername)::text),
+alter column phone type text USING (trim(phone)::text),
+alter column addressline1 type text USING (trim(addressline1)::text),
+alter column addressline2 type text USING (trim(addressline2)::text),
+alter column city type text USING (trim(city)::text),
+alter column state type text USING (trim(state)::text),
+alter column postalcode type text USING (trim(postalcode)::text),
+alter column country type text USING (trim(country)::text),
+alter column territory type text USING (trim(territory)::text),
+alter column contactfullname type text USING (trim(contactfullname)::text),
+alter column productcode type varchar USING (trim(productcode)::varchar),
+alter column dealsize type text USING (trim(dealsize)::text)
