@@ -69,4 +69,17 @@ update sales_dataset_rfm_prj
 set YEAR_ID=extract (year from orderdate)
 
 --- Ex5
+--- using BOXPLOT
+with twt_min_max as
+(select Q1-1.5*IQR as min_value,
+Q3+1.5*IQR as max_value from
+(select
+percentile_cont(0.25) within group (order by QUANTITYORDERED) as Q1,
+percentile_cont(0.75) within group (order by QUANTITYORDERED) as Q3,
+percentile_cont(0.75) within group (order by QUANTITYORDERED) - percentile_cont(0.25) within group (order by QUANTITYORDERED) as IQR
+from sales_dataset_rfm_prj) as a)
+select * from sales_dataset_rfm_prj
+where QUANTITYORDERED < (select min_value from twt_min_max)
+or QUANTITYORDERED > (select max_value from twt_min_max)
+--- using z-score
 
