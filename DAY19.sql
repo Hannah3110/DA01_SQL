@@ -55,4 +55,18 @@ update sales_dataset_rfm_prj
 set CONTACTLASTNAME=upper(substring(contactfullname,position('-'in contactfullname)+1,1))||
 							substring(contactfullname,position('-'in contactfullname)+2)
 
+--- Ex4
+alter table sales_dataset_rfm_prj
+add column QTR_ID int,
+add column MONTH_ID int,
+add column YEAR_ID int;
+
+update sales_dataset_rfm_prj
+set QTR_ID=extract (quarter from orderdate);
+update sales_dataset_rfm_prj
+set MONTH_ID=extract (month from orderdate);
+update sales_dataset_rfm_prj
+set YEAR_ID=extract (year from orderdate)
+
+--- Ex5
 
