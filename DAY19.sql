@@ -46,5 +46,13 @@ or ORDERDATE='';
 --- Ex3
 alter table sales_dataset_rfm_prj
 add column CONTACTLASTNAME text,
-add column CONTACTFIRSTNAME text
+add column CONTACTFIRSTNAME text;
+
+update sales_dataset_rfm_prj
+set CONTACTFIRSTNAME=upper(left(left(contactfullname,position('-'in contactfullname)-1),1))||
+						   substring(left(contactfullname,position('-'in contactfullname)-1),2);
+update sales_dataset_rfm_prj						   
+set CONTACTLASTNAME=upper(substring(contactfullname,position('-'in contactfullname)+1,1))||
+							substring(contactfullname,position('-'in contactfullname)+2)
+
 
