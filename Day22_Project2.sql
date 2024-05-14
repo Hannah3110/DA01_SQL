@@ -15,6 +15,6 @@ where a.status = 'Complete'
 group by  year, month,c.category
 order by c.category,year,month)
 select *,
-round((100.00*lead(TPV) over(partition by category order by category,year,month)-TPV)/TPV,2)||"%" as revenue_growth,
-round((100.00*lead(TPO) over(partition by category order by category,year,month)-TPO)/TPO,2)||"%" as order_growth
-from cte
+lag(TPV) over(partition by category,year order by month),
+round(100.00*(TPV-lag(TPV) over(partition by category,year order by month))/lag(TPV) over(partition by category,year order by month),2)||"%" as revenue_growth,
+round(100.00*(TPO-lag(TPO) over(partition by category,year order by month))/lag(TPO) over(partition by category,year order by month),2)||"%" as order_growth
