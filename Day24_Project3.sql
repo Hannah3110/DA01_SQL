@@ -14,3 +14,14 @@ from public.sales_dataset_rfm_prj
 group by year_id,month_id
 order by year_id,month_id) as a
 where rank_order =1
+---ex3
+select year_id,month_id,productline,
+revenue from
+(select year_id,month_id,productline,
+sum(sales) as revenue,
+dense_rank() over (partition by year_id order by sum(sales) DESC) as rank_order
+from sales_dataset_rfm_prj
+where month_id='11'
+group by year_id,month_id, productline
+order by year_id,month_id, productline) as a
+where rank_order=1
